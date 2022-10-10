@@ -3,17 +3,56 @@ from django.contrib import admin
 # Register your models here.
 from .models import Police
 
+from django import forms
+class PoliceForm(forms.ModelForm):
+    police_category = forms.ChoiceField(choices=[('A','A'), ('B','B'), ('C', 'C')], widget=forms.RadioSelect, label='Category')
+    police_address_permanent = forms.CharField(widget=forms.Textarea, required=False, label='স্থায়ী ঠিকানা')
+    police_address_present = forms.CharField(widget=forms.Textarea, required=False, label='বর্তমান ঠিকানা')
+    police_past = forms.CharField(widget=forms.Textarea, required=False, label='পূর্ববর্তী কর্মস্থল সমূহ')
+    police_comments = forms.CharField(widget=forms.Textarea, required=False, label='Observation Comments')
+    class Meta:
+        model = Police
+        fields = ['police_address_permanent', 'police_address_present', 'police_past', 'police_comments']
+
 # Register your models here.
 class PoliceAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Basic', {'fields': ['police_id',
-                                'police_name_english',
+        ('Basic', {'fields': [
                                 'police_name_bangla',
-                                'police_image',
-                                'police_dob']}),
-        ('Status', {'fields': ['police_rank']}),
+                                'police_name_english',
+                                'police_id',
+                                'police_rank',
+                                'police_present',
+                                'police_image'
+                            ]}),
+        ('Section 2', {'fields': [
+                                'police_father',
+                                'police_mother',
+                                'police_spouse',
+                                'police_gender',
+                                'police_nid',
+                                'police_district',
+                                'police_address_permanent',
+                                'police_address_present',
+                                'police_dob',
+                                'police_batch',
+                                'police_merit',
+                                'police_joining_rank',
+                                'police_category'
+                            ]}),
+        ('Section 3', {'fields': [
+                                'police_blood_group',
+                                'police_religion',
+                                'police_mobile',
+                                'police_email',
+                                'police_present_status',
+                                'police_edu',
+                                'police_past',
+                                'police_comments'
+                            ]}),
     ]
     list_display = ('police_id', 'police_name_bangla', 'police_rank', 'police_district')
     search_fields = ['police_id']
+    form = PoliceForm
 
 admin.site.register(Police, PoliceAdmin)
