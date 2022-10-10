@@ -17,16 +17,18 @@ def get_default_my_date():
 
 class PoliceRanks(models.TextChoices):
     IGP = 'IGP', _('আইজিপি')
-    EIG = 'EIG', _('অতিঃ আইজি')
+    AddlIG = 'Addl. IG', _('অতিঃ আইজি')
     DIG = 'DIG', _('ডিআইজি')
-    EDIG = 'EDIG', _('অতিঃ ডিআইজি')
+    AddlDIG = 'Addl. DIG', _('অতিঃ ডিআইজি')
     SP = 'SP', _('এসপি')
-    ESP = 'ESP', _('অতিঃ এসপি')
-    SSP = 'SSP', _('সিনিয়র এসপি')
+    AddlSP = 'Addl. SP', _('অতিঃ এসপি')
+    SrSP = 'Sr. SP', _('সিনিয়র এসপি')
     ASP = 'ASP', _('এএসপি')
+    SrASP = 'Sr. ASP', _('সিনিয়র এএসপি')
     I = 'I', _('ইন্সপেক্টর')
     SI = 'SI', _('এসআই')
     ASI = 'ASI', _('এএসআই')
+    NA = 'NA', _('প্রযোজ্য নহে')
 
 # Create your models here.
 class Police(models.Model):
@@ -39,7 +41,7 @@ class Police(models.Model):
         verbose_name='Name in Bangla')
     
     # Selects
-    police_rank = models.CharField(max_length=4, choices=PoliceRanks.choices, default=PoliceRanks.I,
+    police_rank = models.CharField(max_length=10, choices=PoliceRanks.choices, default=PoliceRanks.NA,
         verbose_name='Rank')
     
     # Media
@@ -51,6 +53,7 @@ class Police(models.Model):
         verbose_name='Date of Birth')
     @admin.display(
         description='Age',
+        ordering='police_dob',
     )
     def police_age(self):
         return str(date.today() - self.police_dob).split(',')[0]
