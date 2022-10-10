@@ -6,10 +6,14 @@ from .models import Police
 # Register your models here.
 class PoliceAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Basic', {'fields': ['police_id', 'police_name_english', 'police_name_bangla', 'police_image']}),
+        ('Basic', {'fields': ['police_id',
+                                'police_name_english',
+                                'police_name_bangla',
+                                'police_image',
+                                'police_dob']}),
         ('Status', {'fields': ['police_rank']}),
     ]
-    list_display = ('police_id', 'police_name_bangla', 'police_rank')
+    list_display = ('police_id', 'police_name_bangla', 'police_rank', 'police_age')
     search_fields = ['police_id']
 
 admin.site.register(Police, PoliceAdmin)

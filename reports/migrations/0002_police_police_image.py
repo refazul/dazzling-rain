@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='police',
             name='police_image',
-            field=models.ImageField(default='static/logo.jpeg', upload_to=reports.models.user_directory_path),
+            field=models.ImageField(default='logo.jpeg', upload_to=reports.models.user_directory_path),
         ),
     ]
