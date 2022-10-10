@@ -1,5 +1,12 @@
 from django.db import models
+
+import datetime
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
+    return 'police_{0}/{1}'.format(instance.police_id, filename)
 
 class PoliceRanks(models.TextChoices):
     IGP = 'IGP', _('আইজিপি')
@@ -24,5 +31,6 @@ class Police(models.Model):
         choices=PoliceRanks.choices,
         default=PoliceRanks.I,
     )
+    police_image = models.ImageField(upload_to = user_directory_path, default='static/logo.jpeg')
     def __str__(self):
         return self.police_name_english

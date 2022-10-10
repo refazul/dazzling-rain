@@ -6,7 +6,7 @@ from .models import Police
 # Register your models here.
 class PoliceAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Basic', {'fields': ['police_id', 'police_name_english', 'police_name_bangla']}),
+        ('Basic', {'fields': ['police_id', 'police_name_english', 'police_name_bangla', 'police_image']}),
         ('Status', {'fields': ['police_rank']}),
     ]
     list_display = ('police_id', 'police_name_bangla', 'police_rank')
