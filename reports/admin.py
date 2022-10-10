@@ -13,7 +13,7 @@ class PoliceAdmin(admin.ModelAdmin):
                                 'police_dob']}),
         ('Status', {'fields': ['police_rank']}),
     ]
-    list_display = ('police_id', 'police_name_bangla', 'police_rank', 'police_age')
+    list_display = ('police_id', 'police_name_bangla', 'police_rank', 'police_district')
     search_fields = ['police_id']
 
 admin.site.register(Police, PoliceAdmin)
