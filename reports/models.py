@@ -152,8 +152,8 @@ class Police(models.Model):
     police_mother = models.CharField(max_length=200, default='', blank=True, verbose_name='মাতার নাম')
     police_spouse = models.CharField(max_length=200, default='', blank=True, verbose_name='স্পাউস (স্বামী/স্ত্রী) এর নাম')
     police_nid = models.CharField(max_length=200, default='', blank=True, verbose_name='জাতীয় আইডি নং')
-    police_address_permanent = models.CharField(max_length=200, blank=True, default='')
-    police_address_present = models.CharField(max_length=200, blank=True, default='')
+    police_address_permanent = models.CharField(max_length=2000, blank=True, default='')
+    police_address_present = models.CharField(max_length=2000, blank=True, default='')
     police_email = models.CharField(max_length=200, default='', blank=True, verbose_name='ই-মেইল')
     police_designation = models.CharField(max_length=200, default='', blank=True, verbose_name='কর্মরত পদ')
     
@@ -191,7 +191,7 @@ class Police(models.Model):
     )
     def police_age(self):
         return str(date.today() - self.police_dob).split(',')[0]
-    
+
     # Timestamps
     police_created = models.DateTimeField(auto_now_add = True)
     police_updated = models.DateTimeField(auto_now = True)

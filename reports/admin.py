@@ -56,7 +56,7 @@ class PoliceAdmin(admin.ModelAdmin):
                                 'police_comments'
                             ]}),
     ]
-    list_display = ('police_id', 'police_name_bangla', 'police_rank', 'police_district')
+    list_display = ('police_id', 'police_batch', 'police_merit', 'police_name_bangla', 'police_rank', 'police_district')
     search_fields = ['police_id']
     form = PoliceForm
 
