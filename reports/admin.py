@@ -9,10 +9,12 @@ class PoliceForm(forms.ModelForm):
     police_address_permanent = forms.CharField(widget=forms.Textarea, required=False, label='স্থায়ী ঠিকানা')
     police_address_present = forms.CharField(widget=forms.Textarea, required=False, label='বর্তমান ঠিকানা')
     police_past = forms.CharField(widget=forms.Textarea, required=False, label='পূর্ববর্তী কর্মস্থল সমূহ')
-    police_comments = forms.CharField(widget=forms.Textarea, required=False, label='Observation Comments')
+    police_family_background = forms.CharField(widget=forms.Textarea, required=False, label='পারিবারিক ইতিহাস')
+    police_political_background = forms.CharField(widget=forms.Textarea, required=False, label='রাজনৈতিক ইতিহাস')
+    police_comments = forms.CharField(widget=forms.Textarea, required=False, label='পর্যবেক্ষণ মন্তব্য')
     class Meta:
         model = Police
-        fields = ['police_address_permanent', 'police_address_present', 'police_past', 'police_comments']
+        fields = ['police_address_permanent', 'police_address_present', 'police_past', 'police_family_background', 'police_political_background', 'police_comments']
 
 # Register your models here.
 class PoliceAdmin(admin.ModelAdmin):
@@ -23,6 +25,7 @@ class PoliceAdmin(admin.ModelAdmin):
                                 'police_id',
                                 'police_rank',
                                 'police_present',
+                                'police_designation',
                                 'police_image'
                             ]}),
         ('Section 2', {'fields': [
@@ -48,6 +51,8 @@ class PoliceAdmin(admin.ModelAdmin):
                                 'police_present_status',
                                 'police_edu',
                                 'police_past',
+                                'police_family_background',
+                                'police_political_background',
                                 'police_comments'
                             ]}),
     ]

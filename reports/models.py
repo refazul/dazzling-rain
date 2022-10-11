@@ -155,11 +155,14 @@ class Police(models.Model):
     police_address_permanent = models.CharField(max_length=200, blank=True, default='')
     police_address_present = models.CharField(max_length=200, blank=True, default='')
     police_email = models.CharField(max_length=200, default='', blank=True, verbose_name='ই-মেইল')
+    police_designation = models.CharField(max_length=200, default='', blank=True, verbose_name='কর্মরত পদ')
     
     police_merit = models.CharField(max_length=5, default='', verbose_name='PSC Merit List')
     police_present = models.CharField(max_length=200, default='', blank=True, verbose_name='বর্তমান কর্মস্থল')
-    police_past = models.CharField(max_length=2000, default='', blank=True, verbose_name='পূর্ববর্তী কর্মস্থল সমূহ')
-    police_comments = models.CharField(max_length=200, default='', blank=True, verbose_name='Observation Comment')
+    police_past = models.CharField(max_length=2000, default='', blank=True)
+    police_family_background = models.CharField(max_length=2000, default='', blank=True)
+    police_political_background = models.CharField(max_length=2000, default='', blank=True)
+    police_comments = models.CharField(max_length=200, default='', blank=True)
     police_mobile = models.CharField(max_length=200, default='', blank=True, verbose_name='ফোন নম্বর')
     police_edu = models.CharField(max_length=200, default='', blank=True, verbose_name='শিক্ষাগত যোগ্যতা')
     
