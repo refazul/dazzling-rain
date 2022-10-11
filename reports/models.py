@@ -162,7 +162,7 @@ class Police(models.Model):
     police_past = models.CharField(max_length=2000, default='', blank=True)
     police_family_background = models.CharField(max_length=2000, default='', blank=True)
     police_political_background = models.CharField(max_length=2000, default='', blank=True)
-    police_comments = models.CharField(max_length=200, default='', blank=True)
+    police_comments = models.CharField(max_length=2000, default='', blank=True)
     police_mobile = models.CharField(max_length=200, default='', blank=True, verbose_name='ফোন নম্বর')
     police_edu = models.CharField(max_length=200, default='', blank=True, verbose_name='শিক্ষাগত যোগ্যতা')
     

@@ -24,8 +24,8 @@ class PoliceAdmin(admin.ModelAdmin):
                                 'police_name_english',
                                 'police_id',
                                 'police_rank',
-                                'police_present',
                                 'police_designation',
+                                'police_present',
                                 'police_image'
                             ]}),
         ('Section 2', {'fields': [
