@@ -3,6 +3,34 @@ from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from wkhtmltopdf.views import PDFTemplateView
 from django.views.generic import TemplateView
+import bangla
+
+replace_map = {
+    'year': 'বছর',
+    'month': 'মাস',
+    'day': 'দিন',
+    'On Job':'চাকুরীরত',
+    'Sacked':'চাকুরীচ্যুত',
+    'Retired':'অবসরপ্রাপ্ত',
+    'ASP':'এএসপি',
+    'SP':'এসপি',
+    'Inspector':'ইন্সপেক্টর',
+    'ASI':'এএসআই',
+    'SI':'এসআই',
+    'IGP':'আইজিপি',
+    'DIG':'ডিআইজি',
+    'IG':'অতিঃ আইজি',
+    'Addl.': 'অতিঃ',
+    'Sr. ': 'সিনিয়র',
+    'NA':'প্রযোজ্য নহে',
+    'Male':'পুরুষ',
+    'Female':'মহিলা',
+    'Islam':'ইসলাম',
+    'Hindu':'হিন্দু',
+    'Christian':'খ্রিস্টান',
+    'Buddha':'বৌদ্ধ',
+    'Others':'অন্যান্য'
+}
 
 def get_joining_date_from_batch(batch):
     match batch:
@@ -37,7 +65,13 @@ def get_expiry_from_dob(dob):
 def stringify_date(date):
     return date.strftime('%d/%m/%Y')
 def stringify_duration(duration):
-    return "{} year(s) {} month(s) {} day(s)".format(duration.years, duration.months, duration.days)
+    return "{} year {} month {} day".format(duration.years, duration.months, duration.days)
+
+def begalize(string):
+    string = str(string)
+    for word, initial in replace_map.items():
+        string = string.replace(word, initial)
+    return bangla.convert_english_digit_to_bangla_digit(string)
 
 class MyPDF(PDFTemplateView):
     filename = 'pdf.pdf'
@@ -50,36 +84,48 @@ class MyPDF(PDFTemplateView):
         context = super().get_context_data(**kwargs)
         police_id = self.kwargs['police_id']
         police = Police.objects.get(pk=police_id)
+        police_dob = getattr(police, 'police_dob')
+        police_batch = getattr(police, 'police_batch')
         
         fields = []
         for field in Police._meta.get_fields():
-            fields.append({
-                'name': field.name,
-                'verbose_name': field.verbose_name,
-                'value': getattr(police, field.name)
-            })
-            if field.name == 'police_merit':
-                police_batch = getattr(police, 'police_batch')
-                police_dob = getattr(police, 'police_dob')
+            if field.name == 'police_dob':
+                fields.append({
+                    'name': field.name,
+                    'verbose_name': field.verbose_name,
+                    'value': begalize(stringify_date(police_dob))
+                })
+            elif field.name in ['police_batch', 'police_religion', 'police_rank', 'police_joining_rank', 'police_present_status', 'police_gender']:
+                fields.append({
+                    'name': field.name,
+                    'verbose_name': field.verbose_name,
+                    'value': begalize(getattr(police, field.name))
+                })
+            elif field.name == 'police_merit':
                 joining_date = get_joining_date_from_batch(police_batch)
                 resigning_date = get_resigning_date_from_dob(police_dob)
                 expiry = get_expiry_from_dob(police_dob)
                 fields.append({
                     'name': 'joining_date',
                     'verbose_name': 'চাকুরীতে যোগদানের তারিখ',
-                    'value': stringify_date(joining_date)
+                    'value': begalize(stringify_date(joining_date))
                 })
                 fields.append({
                     'name': 'resigning_date',
                     'verbose_name': 'স্বাভাবিক অবসর গ্রহণের তারিখ',
-                    'value': stringify_date(resigning_date)
+                    'value': begalize(stringify_date(resigning_date))
                 })
                 fields.append({
                     'name': 'expiry',
                     'verbose_name': 'চাকুরীর মেয়াদ',
-                    'value': stringify_duration(expiry)
+                    'value': begalize(stringify_duration(expiry))
                 })
-        
+            else:
+                fields.append({
+                    'name': field.name,
+                    'verbose_name': field.verbose_name,
+                    'value': getattr(police, field.name)
+                })
         context['fields'] = fields
         
         return context

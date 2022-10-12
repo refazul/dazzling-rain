@@ -124,7 +124,7 @@ class PresentStatus(models.TextChoices):
     Retired = 'Retired', _('অবসরপ্রাপ্ত')
 class JoiningRanks(models.TextChoices):
     ASP = 'ASP', _('এএসপি')
-    I = 'I', _('ইন্সপেক্টর')
+    I = 'Inspector', _('ইন্সপেক্টর')
     SI = 'SI', _('এসআই')
     ASI = 'ASI', _('এএসআই')
 class PoliceRanks(models.TextChoices):
@@ -137,7 +137,7 @@ class PoliceRanks(models.TextChoices):
     SrSP = 'Sr. SP', _('সিনিয়র এসপি')
     ASP = 'ASP', _('এএসপি')
     SrASP = 'Sr. ASP', _('সিনিয়র এএসপি')
-    I = 'I', _('ইন্সপেক্টর')
+    I = 'Inspector', _('ইন্সপেক্টর')
     SI = 'SI', _('এসআই')
     ASI = 'ASI', _('এএসআই')
     NA = 'NA', _('প্রযোজ্য নহে')
