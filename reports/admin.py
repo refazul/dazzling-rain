@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django_object_actions import DjangoObjectActions
+from django.shortcuts import redirect
 
 # Register your models here.
 from .models import Police
@@ -17,7 +19,14 @@ class PoliceForm(forms.ModelForm):
         fields = ['police_address_permanent', 'police_address_present', 'police_past', 'police_family_background', 'police_political_background', 'police_comments']
 
 # Register your models here.
-class PoliceAdmin(admin.ModelAdmin):
+class PoliceAdmin(DjangoObjectActions, admin.ModelAdmin):
+    def pdf_this(self, request, obj):
+        from django.http import HttpResponseRedirect
+        return HttpResponseRedirect(f'/pdf/{obj.police_id}')
+    pdf_this.label = "Download PDF"  # optional
+    pdf_this.short_description = "Download the PDF"  # optional
+
+    change_actions = ('pdf_this', )
     fieldsets = [
         ('Basic', {'fields': [
                                 'police_name_bangla',

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            font-family: "Kalpurush", sans-serif;
+        }
+        table {
+            width: 60%;
+            margin-left: 10%;
+            float: left;
+        }
+        .top {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        .top h1 {
+            margin-bottom: 0;
+        }
+        .top h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="top">
+        <h1>ব্যক্তিগত তথ্য বিবরণী</h1>
+        <h2>বাংলাদেশ পুলিশ পিআইএমএস অনুসারে</h2>
+    </div>
+    <table>
+        {% load myapp_tags %}
+        {% for field in fields %}
+            {% if field.name in 'police_category, police_image, police_created, police_updated' %}
+                <!-- continue -->
+            {% else %}
+                <tr>
+                    <td width="250"><div>{{ field.verbose_name }}</div></td>
+                    <td>: </td>
+                    <td>{{ object|get_obj_attr:field.name }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+    <div class="image">
+        <img width="100" height="100" src="http://localhost/static/logo.jpeg">
+    </div>
+</body>
+</html>

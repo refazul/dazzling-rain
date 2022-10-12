@@ -144,47 +144,45 @@ class PoliceRanks(models.TextChoices):
 
 # Create your models here.
 class Police(models.Model):
-    # Texts
-    police_id = models.CharField(max_length=50, primary_key = True, verbose_name='পুলিশর আইডি নং')
-    police_name_english = models.CharField(max_length=200, default='', verbose_name='নাম (ইংরেজি)')
     police_name_bangla = models.CharField(max_length=200, default='', verbose_name='নাম (বাংলা)')
+    police_name_english = models.CharField(max_length=200, default='', verbose_name='নাম (ইংরেজি)')
+    police_id = models.CharField(max_length=50, primary_key = True, verbose_name='পুলিশর আইডি নং')
+    police_rank = models.CharField(max_length=10, choices=PoliceRanks.choices, default=PoliceRanks.NA, verbose_name='বর্তমান পদবী')
+    police_designation = models.CharField(max_length=200, default='', blank=True, verbose_name='কর্মরত পদ')
+    police_present = models.CharField(max_length=200, default='', blank=True, verbose_name='বর্তমান কর্মস্থল')
+
     police_father = models.CharField(max_length=200, default='', blank=True, verbose_name='পিতার নাম')
     police_mother = models.CharField(max_length=200, default='', blank=True, verbose_name='মাতার নাম')
     police_spouse = models.CharField(max_length=200, default='', blank=True, verbose_name='স্পাউস (স্বামী/স্ত্রী) এর নাম')
+    police_gender = models.CharField(max_length=10, choices=Genders.choices, default=Genders.Male, verbose_name='লিঙ্গ')
     police_nid = models.CharField(max_length=200, default='', blank=True, verbose_name='জাতীয় আইডি নং')
-    police_address_permanent = models.CharField(max_length=2000, blank=True, default='')
-    police_address_present = models.CharField(max_length=2000, blank=True, default='')
-    police_email = models.CharField(max_length=200, default='', blank=True, verbose_name='ই-মেইল')
-    police_designation = models.CharField(max_length=200, default='', blank=True, verbose_name='কর্মরত পদ')
-    
+    police_district = models.CharField(max_length=50, choices=Districts.choices, default=Districts.Comilla, verbose_name='নিজ জেলা')
+    police_address_permanent = models.CharField(max_length=2000, blank=True, default='', verbose_name='স্থায়ী ঠিকানা')
+    police_address_present = models.CharField(max_length=2000, blank=True, default='', verbose_name='বর্তমান ঠিকানা')
+    police_dob = models.DateField(default=get_default_dob, verbose_name='জন্ম তারিখ')
+    police_batch = models.CharField(max_length=5, choices=Batches.choices, default=Batches.ThirtySix, verbose_name='বিসিএস ব্যাচ')
     police_merit = models.CharField(max_length=5, default='', verbose_name='PSC Merit List')
-    police_present = models.CharField(max_length=200, default='', blank=True, verbose_name='বর্তমান কর্মস্থল')
-    police_past = models.CharField(max_length=2000, default='', blank=True)
-    police_family_background = models.CharField(max_length=2000, default='', blank=True)
-    police_political_background = models.CharField(max_length=2000, default='', blank=True)
-    police_comments = models.CharField(max_length=2000, default='', blank=True)
+    # 3 calculated fields here
+
+    police_joining_rank = models.CharField(max_length=10, choices=JoiningRanks.choices, default=JoiningRanks.ASP, verbose_name='চাকুরীতে যোগদানের পদ')
+    police_blood_group = models.CharField(max_length=10, choices=BloodGroups.choices, default=BloodGroups.Op, verbose_name='রক্তের গ্রুপ')
+    police_religion = models.CharField(max_length=10, choices=Religions.choices, default=Religions.Islam, verbose_name='ধর্ম')
     police_mobile = models.CharField(max_length=200, default='', blank=True, verbose_name='ফোন নম্বর')
+    police_email = models.CharField(max_length=200, default='', blank=True, verbose_name='ই-মেইল')
+    police_promotion_date = models.DateField(default=get_default_my_date, verbose_name='বর্তমান পদে পদোন্নতির তারিখ')
+    police_present_status = models.CharField(max_length=10, choices=PresentStatus.choices, default=PresentStatus.OnJob, verbose_name='বর্তমান অবস্থা')
     police_edu = models.CharField(max_length=200, default='', blank=True, verbose_name='শিক্ষাগত যোগ্যতা')
     
-    # Selects
-    police_rank = models.CharField(max_length=10, choices=PoliceRanks.choices, default=PoliceRanks.NA, verbose_name='বর্তমান পদবী')
-    police_joining_rank = models.CharField(max_length=10, choices=JoiningRanks.choices, default=JoiningRanks.ASP, verbose_name='চাকুরীতে যোগদানের পদ')
-    police_present_status = models.CharField(max_length=10, choices=PresentStatus.choices, default=PresentStatus.OnJob, verbose_name='বর্তমান অবস্থা')
-    police_batch = models.CharField(max_length=5, choices=Batches.choices, default=Batches.ThirtySix, verbose_name='বিসিএস ব্যাচ')
-    police_religion = models.CharField(max_length=10, choices=Religions.choices, default=Religions.Islam, verbose_name='ধর্ম')
-    police_blood_group = models.CharField(max_length=10, choices=BloodGroups.choices, default=BloodGroups.Op, verbose_name='রক্তের গ্রুপ')
-    police_gender = models.CharField(max_length=10, choices=Genders.choices, default=Genders.Male, verbose_name='লিঙ্গ')
-    police_district = models.CharField(max_length=50, choices=Districts.choices, default=Districts.Comilla, verbose_name='নিজ জেলা')
+    police_past = models.CharField(max_length=2000, default='', blank=True, verbose_name='পূর্ববর্তী কর্মস্থল সমূহ')
+    police_family_background = models.CharField(max_length=2000, default='', blank=True, verbose_name='পারিবারিক ইতিহাস')
+    police_political_background = models.CharField(max_length=2000, default='', blank=True, verbose_name='রাজনৈতিক ইতিহাস')
+    police_comments = models.CharField(max_length=2000, default='', blank=True, verbose_name='পর্যবেক্ষণ মন্তব্য')
     
-    # Radio
+    
     police_category = models.CharField(max_length=1, choices=[('A','A'), ('B','B'), ('C', 'C')], default='A')
-    
-    # Media
     police_image = models.ImageField(upload_to = user_directory_path, default='logo.jpeg', verbose_name='ছবি')
     
-    # Dates
-    police_dob = models.DateField(default=get_default_dob, verbose_name='জন্ম তারিখ')
-    police_promotion_date = models.DateField(default=get_default_my_date, verbose_name='বর্তমান পদে পদোন্নতির তারিখ')
+    
     @admin.display(
         description='Age',
         ordering='police_dob',
