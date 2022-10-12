@@ -29,6 +29,9 @@
         td {
             vertical-align: top;
         }
+        p {
+            margin: 0
+        }
     </style>
 </head>
 <body>
@@ -45,7 +48,7 @@
                 <tr>
                     <td width="250"><div>{{ field.verbose_name }}</div></td>
                     <td width="10">: </td>
-                    <td>{{ field.value }}</td>
+                    <td><div>{{ field.value | linebreaks }}</div></td>
                 </tr>
             {% endif %}
         {% endfor %}
