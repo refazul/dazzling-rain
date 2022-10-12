@@ -9,6 +9,7 @@
     <style type="text/css">
         body {
             font-family: "Kalpurush", sans-serif;
+            font-size: 20px;
         }
         table {
             width: 60%;
@@ -25,6 +26,9 @@
         .top h2 {
             margin-top: 0;
         }
+        td {
+            vertical-align: top;
+        }
     </style>
 </head>
 <body>
@@ -35,13 +39,13 @@
     <table>
         {% load myapp_tags %}
         {% for field in fields %}
-            {% if field.name in 'police_category, police_image, police_created, police_updated' %}
+            {% if field.name in 'police_merit, police_family_background, police_promotion_date, police_category, police_image, police_created, police_updated' %}
                 <!-- continue -->
             {% else %}
                 <tr>
                     <td width="250"><div>{{ field.verbose_name }}</div></td>
-                    <td>: </td>
-                    <td>{{ object|get_obj_attr:field.name }}</td>
+                    <td width="10">: </td>
+                    <td>{{ field.value }}</td>
                 </tr>
             {% endif %}
         {% endfor %}
