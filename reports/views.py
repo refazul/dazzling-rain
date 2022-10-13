@@ -127,5 +127,6 @@ class MyPDF(PDFTemplateView):
                     'value': getattr(police, field.name)
                 })
         context['fields'] = fields
+        context['image'] = police_batch = getattr(police, 'police_image_url')
         
         return context

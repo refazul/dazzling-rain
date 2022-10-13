@@ -176,11 +176,12 @@ class Police(models.Model):
     police_past = models.CharField(max_length=2000, default='', blank=True, verbose_name='পূর্ববর্তী কর্মস্থল সমূহ')
     police_family_background = models.CharField(max_length=2000, default='', blank=True, verbose_name='পারিবারিক ইতিহাস')
     police_political_background = models.CharField(max_length=2000, default='', blank=True, verbose_name='রাজনৈতিক ইতিহাস')
-    police_comments = models.CharField(max_length=2000, default='', blank=True, verbose_name='পর্যবেক্ষণ মন্তব্য')
+    police_comments = models.CharField(max_length=1000, default='', blank=True, verbose_name='পর্যবেক্ষণ মন্তব্য')
     
     
     police_category = models.CharField(max_length=1, choices=[('A','A'), ('B','B'), ('C', 'C')], default='A')
     police_image = models.ImageField(upload_to = user_directory_path, default='logo.jpeg', verbose_name='ছবি')
+    police_image_url = models.CharField(max_length=1000, default='', blank=True, verbose_name='ছবি (S3)')
     
     
     @admin.display(

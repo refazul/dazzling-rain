@@ -42,7 +42,7 @@
     <table>
         {% load myapp_tags %}
         {% for field in fields %}
-            {% if field.name in 'police_merit, police_family_background, police_promotion_date, police_category, police_image, police_created, police_updated' %}
+            {% if field.name in 'police_merit, police_family_background, police_promotion_date, police_category, police_image, police_image_url, police_created, police_updated' %}
                 <!-- continue -->
             {% else %}
                 <tr>
@@ -54,7 +54,7 @@
         {% endfor %}
     </table>
     <div class="image">
-        <img width="100" height="100" src="http://localhost/static/logo.jpeg">
+        <img width="100" height="100" src={{image}}>
     </div>
 </body>
 </html>
