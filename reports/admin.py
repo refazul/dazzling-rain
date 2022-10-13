@@ -35,7 +35,7 @@ class PoliceAdmin(DjangoObjectActions, admin.ModelAdmin):
                                 'police_rank',
                                 'police_designation',
                                 'police_present',
-                                'police_image'
+                                'police_image',
                                 'police_image_url'
                             ]}),
         ('Section 2', {'fields': [
