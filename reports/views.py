@@ -137,6 +137,7 @@ class MyPDF(PDFTemplateView):
                     'value': getattr(police, field.name)
                 })
         context['fields'] = fields
+        context['id'] = police_id
         context['image'] = get_storage_class()().url(name=police_image.name)
         
         return context
