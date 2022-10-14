@@ -4,6 +4,7 @@ from dateutil.relativedelta import relativedelta
 from wkhtmltopdf.views import PDFTemplateView
 from django.views.generic import TemplateView
 import bangla
+from django.core.files.storage import get_storage_class
 
 replace_map = {
     'year': 'বছর',
@@ -86,6 +87,7 @@ class MyPDF(PDFTemplateView):
         police = Police.objects.get(pk=police_id)
         police_dob = getattr(police, 'police_dob')
         police_batch = getattr(police, 'police_batch')
+        police_image = getattr(police, 'police_image')
         
         fields = []
         for field in Police._meta.get_fields():
@@ -127,6 +129,6 @@ class MyPDF(PDFTemplateView):
                     'value': getattr(police, field.name)
                 })
         context['fields'] = fields
-        context['image'] = police_batch = getattr(police, 'police_image_url')
+        context['image'] = get_storage_class()().url(name=police_image.name)
         
         return context

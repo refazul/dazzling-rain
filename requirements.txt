@@ -6,3 +6,5 @@ openpyxl
 django-object-actions
 django-wkhtmltopdf
 bangla
+django-storages
+python-dotenv

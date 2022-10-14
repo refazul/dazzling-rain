@@ -181,7 +181,7 @@ class Police(models.Model):
     
     police_category = models.CharField(max_length=1, choices=[('A','A'), ('B','B'), ('C', 'C')], default='A')
     police_image = models.ImageField(upload_to = user_directory_path, default='logo.jpeg', verbose_name='ছবি')
-    police_image_url = models.CharField(max_length=1000, default='', blank=True, verbose_name='ছবি (S3)')
+    #police_image_url = models.CharField(max_length=1000, default='', blank=True, verbose_name='ছবি (S3)')
     
     
     @admin.display(
