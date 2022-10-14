@@ -77,7 +77,7 @@ def begalize(string):
 class MyPDF(PDFTemplateView):
     #filename = 'pdf.pdf'
     template_name = 'pdf.html'
-    show_content_in_browser = True
+    #show_content_in_browser = True
     model = Police
     cmd_options = {
         'margin-top': 3
