@@ -148,7 +148,7 @@ class Police(models.Model):
     police_name_english = models.CharField(max_length=200, default='', verbose_name='নাম (ইংরেজি)')
     police_id = models.CharField(max_length=50, primary_key = True, verbose_name='পুলিশর আইডি নং')
     police_rank = models.CharField(max_length=10, choices=PoliceRanks.choices, default=PoliceRanks.NA, verbose_name='বর্তমান পদবী')
-    police_designation = models.CharField(max_length=200, default='', blank=True, verbose_name='কর্মরত পদ')
+    police_designation = models.CharField(max_length=200, default='প্রযোজ্য নহে', blank=True, verbose_name='কর্মরত পদ')
     police_present = models.CharField(max_length=200, default='', blank=True, verbose_name='বর্তমান কর্মস্থল')
 
     police_father = models.CharField(max_length=200, default='', blank=True, verbose_name='পিতার নাম')
@@ -175,7 +175,7 @@ class Police(models.Model):
     
     police_past = models.CharField(max_length=2000, default='', blank=True, verbose_name='পূর্ববর্তী কর্মস্থল সমূহ')
     police_family_background = models.CharField(max_length=2000, default='', blank=True, verbose_name='পারিবারিক ইতিহাস')
-    police_political_background = models.CharField(max_length=2000, default='', blank=True, verbose_name='রাজনৈতিক ইতিহাস')
+    police_political_background = models.CharField(max_length=2000, default='প্রযোজ্য নহে', blank=True, verbose_name='রাজনৈতিক ইতিহাস')
     police_comments = models.CharField(max_length=1000, default='', blank=True, verbose_name='পর্যবেক্ষণ মন্তব্য')
     
     

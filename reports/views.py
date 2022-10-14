@@ -119,7 +119,7 @@ class MyPDF(PDFTemplateView):
                 })
                 fields.append({
                     'name': 'expiry',
-                    'verbose_name': 'চাকুরীর মেয়াদ',
+                    'verbose_name': 'চাকুরীর অবশিষ্ট মেয়াদ',
                     'value': begalize(stringify_duration(expiry))
                 })
             else:
