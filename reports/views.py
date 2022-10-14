@@ -103,6 +103,14 @@ class MyPDF(PDFTemplateView):
                     'verbose_name': field.verbose_name,
                     'value': begalize(getattr(police, field.name))
                 })
+            elif field.name in ['police_designation', 'police_political_background']:
+                value = getattr(police, field.name)
+                value = 'প্রযোজ্য নহে' if value == '' else value
+                fields.append({
+                    'name': field.name,
+                    'verbose_name': field.verbose_name,
+                    'value': value
+                })
             elif field.name == 'police_merit':
                 joining_date = get_joining_date_from_batch(police_batch)
                 resigning_date = get_resigning_date_from_dob(police_dob)
