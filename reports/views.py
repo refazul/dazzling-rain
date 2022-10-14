@@ -75,12 +75,16 @@ def begalize(string):
     return bangla.convert_english_digit_to_bangla_digit(string)
 
 class MyPDF(PDFTemplateView):
-    filename = 'pdf.pdf'
+    #filename = 'pdf.pdf'
     template_name = 'pdf.html'
+    show_content_in_browser = True
     model = Police
     cmd_options = {
         'margin-top': 3
     }
+    def get_filename(self, **kwargs):
+        return self.kwargs['police_id'] + '.pdf'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         police_id = self.kwargs['police_id']
