@@ -8,3 +8,4 @@ django-wkhtmltopdf
 bangla
 django-storages
 python-dotenv
+boto3
