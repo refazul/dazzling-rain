@@ -1,3 +1,4 @@
 .env
 .git_*
 media
+.idea
