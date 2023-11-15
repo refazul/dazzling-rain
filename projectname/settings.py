@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'wkhtmltopdf',
     'polls.apps.PollsConfig',
     'reports.apps.ReportsConfig',
+    'pmis.apps.PmisConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
