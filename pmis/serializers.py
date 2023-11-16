@@ -1,12 +1,27 @@
+# serializers.py
 from rest_framework import serializers
-from .models import Person, Address
+from .models import Person, Child, Spouse, Address
 
-class PersonSerializer(serializers.ModelSerializer):
+class ChildSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Person
-        fields = '__all__'  # Or list specific fields you want to include
+        model = Child
+        fields = '__all__'
+
+class SpouseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Spouse
+        fields = '__all__'
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
-        fields = '__all__'  # Or list specific fields you want to include
+        fields = '__all__'
+
+class PersonSerializer(serializers.ModelSerializer):
+    child = ChildSerializer(many=True)
+    spouse = SpouseSerializer(many=True)
+    address = AddressSerializer(many=True)
+
+    class Meta:
+        model = Person
+        fields = '__all__'
