@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'reports.apps.ReportsConfig',
     'pmis.apps.PmisConfig',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
