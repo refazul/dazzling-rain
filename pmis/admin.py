@@ -30,9 +30,36 @@ class LocalTrainingInline(admin.TabularInline):  # You can also use admin.Stacke
     extra = 1  # Number of empty forms to display
 
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'date_of_birth')  # Customize the columns displayed
-    search_fields = ('first_name', 'last_name')  # Add search functionality
-    list_filter = ('date_of_birth',)  # Add filter options
+    list_display = ('person_name', 'nid', 'govt_id')  # Customize the columns displayed
+    search_fields = ('person_name', 'nid', 'govt_id')  # Add search functionality
+    list_filter = ('rank', 'batch', 'home_district')  # Add filter options
+    fieldsets = [
+        ('Basic', {'fields': [
+            'govt_id',
+            'person_name',
+            'name_bangla',
+            'father_name',
+            'mother_name',
+            'date_of_birth',
+            'lpr_prl_date',
+            'rank',
+            'home_district',
+            'designation',
+            'organization',
+            'order_date',
+            'join_date',
+            'cadre',
+            'cadre_date',
+            'batch',
+            'confirmation_g_o_date',
+            'gender',
+            'religion',
+            'marital_stat',
+            'nid',
+            'mobile',
+            'email',
+        ]}),
+    ]
     inlines = [ChildInline, SpouseInline, AddressInline, EducationInline, PostingInline, ServiceHistoryInline, LocalTrainingInline]
 
 admin.site.register(Person, PersonAdmin)
