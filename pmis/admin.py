@@ -1,9 +1,5 @@
 from django.contrib import admin
-from .models import Person, Education, Posting, ServiceHistory, LocalTraining, Child, Spouse,Address
-
-class ChildInline(admin.TabularInline):  # You can also use admin.StackedInline
-    model = Child
-    extra = 1  # Number of empty forms to display
+from .models import Person,Spouse, Child, Address, Language, Education, Training, Travel, PostingAbroad, AdditionalProQualification, Publication, HonourAward, OtherServices, ServiceHistory, PromotionParticulars, DisciplinaryActions, PostingRecords
 
 class SpouseInline(admin.TabularInline):  # You can also use admin.StackedInline
     model = Spouse
@@ -13,20 +9,61 @@ class AddressInline(admin.TabularInline):  # You can also use admin.StackedInlin
     model = Address
     extra = 1  # Number of empty forms to display
 
+class ChildInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = Child
+    extra = 1  # Number of empty forms to display
+
+class LanguageInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = Language
+    extra = 1
+
 class EducationInline(admin.TabularInline):  # You can also use admin.StackedInline
     model = Education
     extra = 1  # Number of empty forms to display
 
-class PostingInline(admin.TabularInline):  # You can also use admin.StackedInline
-    model = Posting
+class TrainingInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = Training
+    extra = 1  # Number of empty forms to display
+
+class TravelInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = Travel
+    extra = 1  # Number of empty forms to display
+
+class PostingAbroadInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = PostingAbroad
+    extra = 1  # Number of empty forms to display
+
+class AdditionalProQualificationInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = AdditionalProQualification
+    extra = 1  # Number of empty forms to display
+
+
+class PublicationInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = Publication
+    extra = 1  # Number of empty forms to display
+
+class HonourAwardInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = HonourAward
+    extra = 1  # Number of empty forms to display
+
+class OtherServicesInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = OtherServices
     extra = 1  # Number of empty forms to display
 
 class ServiceHistoryInline(admin.TabularInline):  # You can also use admin.StackedInline
     model = ServiceHistory
     extra = 1  # Number of empty forms to display
 
-class LocalTrainingInline(admin.TabularInline):  # You can also use admin.StackedInline
-    model = LocalTraining
+class PromotionParticularsInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = PromotionParticulars
+    extra = 1  # Number of empty forms to display
+
+class DisciplinaryActionsInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = DisciplinaryActions
+    extra = 1  # Number of empty forms to display
+
+class PostingRecordsInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = PostingRecords
     extra = 1  # Number of empty forms to display
 
 class PersonAdmin(admin.ModelAdmin):
@@ -45,7 +82,7 @@ class PersonAdmin(admin.ModelAdmin):
             'rank',
             'home_district',
             'designation',
-            'organization',
+            'organisation',
             'order_date',
             'join_date',
             'cadre',
@@ -56,10 +93,11 @@ class PersonAdmin(admin.ModelAdmin):
             'religion',
             'marital_stat',
             'nid',
+            'freedom_fighter',
             'mobile',
             'email',
         ]}),
     ]
-    inlines = [ChildInline, SpouseInline, AddressInline, EducationInline, PostingInline, ServiceHistoryInline, LocalTrainingInline]
+    inlines = [SpouseInline, ChildInline, AddressInline, LanguageInline, EducationInline, TrainingInline, TravelInline, PostingAbroadInline, AdditionalProQualificationInline, PublicationInline, HonourAwardInline, OtherServicesInline, ServiceHistoryInline, PromotionParticularsInline, DisciplinaryActionsInline, PostingRecordsInline]
 
 admin.site.register(Person, PersonAdmin)

@@ -12,6 +12,11 @@ class Person(models.Model):
         ('Y', 'Yes'),
         ('N', 'No')
     ]
+    TRAIN_TYPE = [
+        ('LM', 'LOCAL (MANDATORY)'),
+        ('L', 'LOCAL'),
+        ('F', 'FOREIGN')
+    ]
 
     person_name     = models.CharField(max_length=100, blank=True)
     name_bangla     = models.CharField(max_length=100, blank=True)
@@ -32,7 +37,7 @@ class Person(models.Model):
     rank                = models.CharField(max_length=100, blank=True)
     home_district       = models.CharField(max_length=100, blank=True)
     designation         = models.CharField(max_length=100, blank=True)
-    organization        = models.CharField(max_length=100, blank=True)
+    organisation        = models.CharField(max_length=100, blank=True)
     cadre               = models.CharField(max_length=100, blank=True)
     batch               = models.CharField(max_length=100, blank=True)
     religion            = models.CharField(max_length=100, blank=True)
@@ -45,75 +50,197 @@ class Person(models.Model):
         return f"{self.person_name} {self.name_bangla}"
 
 class Spouse(models.Model):
-    person      = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='spouse', null=True, default=None)
-    spouse_name = models.CharField(max_length=100, blank=True)
-    gender      = models.CharField(max_length=1, choices=Person.GENDER_CHOICES)
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='spouse', null=True, default=None)
+
+    spouse_name     = models.CharField(max_length=100, blank=True)
+    occupation      = models.CharField(max_length=100, blank=True)
+    designation     = models.CharField(max_length=100, blank=True)
+    home_district   = models.CharField(max_length=100, blank=True)
+    organisation    = models.CharField(max_length=100, blank=True)
+    location        = models.CharField(max_length=100, blank=True)
+    gender          = models.CharField(max_length=1, choices=Person.GENDER_CHOICES)
 
     def __str__(self):
         return f"{self.spouse_name}"
 
 class Child(models.Model):
-    person      = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='child', null=True, default=None)
-    child_name  = models.CharField(max_length=100, blank=True)
-    gender      = models.CharField(max_length=1, choices=Person.GENDER_CHOICES)
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='child', null=True, default=None)
+
+    child_name      = models.CharField(max_length=100, blank=True)
+    date_of_birth   = models.DateField(null=True, blank=True)
+    gender          = models.CharField(max_length=1, choices=Person.GENDER_CHOICES)
 
     def __str__(self):
         return f"{self.child_name}"
 
 class Address(models.Model):
-    person      = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='address', null=True, default=None)
-    house_no    = models.CharField(max_length=100, blank=True)
-    road_no     = models.CharField(max_length=100, blank=True)
-    area        = models.CharField(max_length=100, blank=True)
-    thana       = models.CharField(max_length=100, blank=True)
-    district    = models.CharField(max_length=100, blank=True)
-    division    = models.CharField(max_length=100, blank=True)
-    postal_code = models.CharField(max_length=10, blank=True)
+    person                      = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='address', null=True, default=None)
+
+    village_or_house_or_road    = models.CharField(max_length=100, blank=True)
+    post_office                 = models.CharField(max_length=100, blank=True)
+    police_station              = models.CharField(max_length=100, blank=True)
+    district                    = models.CharField(max_length=100, blank=True)
+    telephone_no                = models.CharField(max_length=10, blank=True)
 
     def __str__(self):
-        return f"{self.house_no}, Road {self.road_no}, {self.area}, {self.thana}, {self.district}, {self.division}, {self.postal_code}"
+        return f"{self.village_or_house_or_road}"
 
+class Language(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='language', null=True, default=None)
+
+    language_name   = models.CharField(max_length=10, blank=True)
+    read            = models.CharField(max_length=1, choices=Person.YES_NO)
+    write           = models.CharField(max_length=1, choices=Person.YES_NO)
+    speak           = models.CharField(max_length=1, choices=Person.YES_NO)
+
+    def __str__(self):
+        return f"{self.language_name}"
 class Education(models.Model):
     person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='educational_qualifications', null=True, default=None)
-    institution_name    = models.CharField(max_length=255, blank=True)
+
+    name_of_institution = models.CharField(max_length=255, blank=True)
+    principal_subject   = models.CharField(max_length=100, blank=True)
     degree              = models.CharField(max_length=100, blank=True)
-    field_of_study      = models.CharField(max_length=100, blank=True)
-    start_year          = models.CharField(max_length=100, blank=True)
-    end_year            = models.CharField(max_length=100, blank=True)
+    passing_year        = models.CharField(max_length=100, blank=True)
+    result              = models.CharField(max_length=100, blank=True)
+    gpa_or_cgpa         = models.CharField(max_length=100, blank=True)
+    distinction         = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return f"{self.degree} in {self.field_of_study} from {self.institution_name}"
+        return f"{self.name_of_institution}"
 
-class Posting(models.Model):
-    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='posting_records', null=True, default=None)
-    designation     = models.CharField(max_length=100, blank=True)
-    organization    = models.CharField(max_length=100, blank=True)
-    location        = models.CharField(max_length=100, blank=True)
+class Training(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='training', null=True, default=None)
+
+    training_type   = models.CharField(max_length=50, choices=Person.TRAIN_TYPE)
+    course_title    = models.CharField(max_length=255, blank=True)
+    institution     = models.CharField(max_length=100, blank=True)
+    position        = models.CharField(max_length=100, blank=True)
+
     from_date       = models.DateField(null=True, blank=True)
     to_date         = models.DateField(null=True, blank=True)
-    pay_scale       = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return f"{self.designation} at {self.organization}, {self.location}"
+        return f"{self.training_type}"
+
+class Travel(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='travel', null=True, default=None)
+
+    country         = models.CharField(max_length=255, blank=True)
+    purpose         = models.CharField(max_length=100, blank=True)
+
+    from_date       = models.DateField(null=True, blank=True)
+    to_date         = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.country}"
+class PostingAbroad(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='posting_abroad', null=True, default=None)
+
+    post            = models.CharField(max_length=255, blank=True)
+    organisation    = models.CharField(max_length=100, blank=True)
+    country         = models.CharField(max_length=100, blank=True)
+
+    from_date       = models.DateField(null=True, blank=True)
+    to_date         = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.post}"
+
+class AdditionalProQualification(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='additional_pro_qualification', null=True, default=None)
+
+    qualification   = models.CharField(max_length=255, blank=True)
+    def __str__(self):
+        return f"{self.qualification}"
+
+
+
+class Publication(models.Model):
+    person                  = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='publication', null=True, default=None)
+
+    book                    = models.CharField(max_length=255, blank=True)
+    periodical_monograph    = models.CharField(max_length=255, blank=True)
+    journals                = models.CharField(max_length=255, blank=True)
+    description             = models.CharField(max_length=255, blank=True)
+
+    date                    = models.DateField(null=True, blank=True)
+    def __str__(self):
+        return f"{self.book}"
+
+
+
+class HonourAward(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='honour_award', null=True, default=None)
+
+    title_of_award  = models.CharField(max_length=255, blank=True)
+    ground          = models.CharField(max_length=255, blank=True)
+
+    date            = models.DateField(null=True, blank=True)
+    def __str__(self):
+        return f"{self.title_of_award}"
+
+class OtherServices(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='other_services', null=True, default=None)
+
+    name_of_employeer   = models.CharField(max_length=255, blank=True)
+    address             = models.CharField(max_length=255, blank=True)
+    type_of_service     = models.CharField(max_length=255, blank=True)
+    posting             = models.CharField(max_length=255, blank=True)
+
+    from_date           = models.DateField(null=True, blank=True)
+    to_date             = models.DateField(null=True, blank=True)
+    def __str__(self):
+        return f"{self.name_of_employeer}"
+
+
 
 class ServiceHistory(models.Model):
     person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='service_history', null=True, default=None)
+
+    cadre = models.CharField(max_length=100, blank=True)
+
     govt_service_date   = models.DateField(null=True, blank=True)
     gazetted_date       = models.DateField(null=True, blank=True)
     encadrement_date    = models.DateField(null=True, blank=True)
-    cadre               = models.CharField(max_length=100, blank=True)
+
 
     def __str__(self):
         return f"Cadre: {self.cadre}"
 
-class LocalTraining(models.Model):
-    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='local_trainings', null=True, default=None)
-    course_title    = models.CharField(max_length=255, blank=True)
-    institution     = models.CharField(max_length=255, blank=True)
-    position        = models.CharField(max_length=100, blank=True)
-    from_date       = models.DateField(null=True, blank=True)
-    to_date         = models.DateField(null=True, blank=True)
-    duration        = models.CharField(max_length=255, blank=True)
+class PromotionParticulars(models.Model):
+    person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='promotion_particulars', null=True, default=None)
+    rank                = models.CharField(max_length=100, blank=True)
+    nature_of_promotion = models.CharField(max_length=100, blank=True)
+    pay_scale           = models.CharField(max_length=100, blank=True)
+
+    promotion_date      = models.DateField(null=True, blank=True)
+    g_o_date            = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.course_title} at {self.institution}"
+        return f"Cadre: {self.rank}"
+
+
+class DisciplinaryActions(models.Model):
+    person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='disciplinary_actions', null=True, default=None)
+    nature_of_offence   = models.CharField(max_length=100, blank=True)
+    punishment          = models.CharField(max_length=100, blank=True)
+    remarks             = models.CharField(max_length=100, blank=True)
+
+    date                = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Cadre: {self.nature_of_offence}"
+
+class PostingRecords(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='posting_records', null=True, default=None)
+    designation     = models.CharField(max_length=100, blank=True)
+    organisation    = models.CharField(max_length=100, blank=True)
+    location        = models.CharField(max_length=100, blank=True)
+    pay_scale       = models.CharField(max_length=100, blank=True)
+
+    from_date       = models.DateField(null=True, blank=True)
+    to_date         = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Cadre: {self.designation}"
