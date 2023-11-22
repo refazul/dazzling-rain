@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Person,Spouse, Child, Address, Language, Education, Training, Travel, PostingAbroad, AdditionalProQualification, Publication, HonourAward, OtherServices, ServiceHistory, PromotionParticulars, DisciplinaryActions, PostingRecords
+from .models import Person,Spouse, Child, Address, Language, Education, Training, Travel, PostingAbroad, AdditionalProQualification, Publication, HonourAward, OtherServices, ServiceHistory, PromotionParticulars, DisciplinaryActions, Posting
 
 class SpouseInline(admin.TabularInline):  # You can also use admin.StackedInline
     model = Spouse
@@ -62,8 +62,8 @@ class DisciplinaryActionsInline(admin.TabularInline):  # You can also use admin.
     model = DisciplinaryActions
     extra = 1  # Number of empty forms to display
 
-class PostingRecordsInline(admin.TabularInline):  # You can also use admin.StackedInline
-    model = PostingRecords
+class PostingInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = Posting
     extra = 1  # Number of empty forms to display
 
 class PersonAdmin(admin.ModelAdmin):
@@ -98,6 +98,6 @@ class PersonAdmin(admin.ModelAdmin):
             'email',
         ]}),
     ]
-    inlines = [SpouseInline, ChildInline, AddressInline, LanguageInline, EducationInline, TrainingInline, TravelInline, PostingAbroadInline, AdditionalProQualificationInline, PublicationInline, HonourAwardInline, OtherServicesInline, ServiceHistoryInline, PromotionParticularsInline, DisciplinaryActionsInline, PostingRecordsInline]
+    inlines = [SpouseInline, ChildInline, AddressInline, LanguageInline, EducationInline, TrainingInline, TravelInline, PostingAbroadInline, AdditionalProQualificationInline, PublicationInline, HonourAwardInline, OtherServicesInline, ServiceHistoryInline, PromotionParticularsInline, DisciplinaryActionsInline, PostingInline]
 
 admin.site.register(Person, PersonAdmin)

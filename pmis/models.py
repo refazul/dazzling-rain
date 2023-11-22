@@ -96,7 +96,7 @@ class Language(models.Model):
     def __str__(self):
         return f"{self.language_name}"
 class Education(models.Model):
-    person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='educational_qualifications', null=True, default=None)
+    person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='education', null=True, default=None)
 
     name_of_institution = models.CharField(max_length=255, blank=True)
     principal_subject   = models.CharField(max_length=100, blank=True)
@@ -232,8 +232,8 @@ class DisciplinaryActions(models.Model):
     def __str__(self):
         return f"Cadre: {self.nature_of_offence}"
 
-class PostingRecords(models.Model):
-    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='posting_records', null=True, default=None)
+class Posting(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='posting', null=True, default=None)
     designation     = models.CharField(max_length=100, blank=True)
     organisation    = models.CharField(max_length=100, blank=True)
     location        = models.CharField(max_length=100, blank=True)

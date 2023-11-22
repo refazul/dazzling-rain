@@ -116,7 +116,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='PostingRecords',
+            name='Posting',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('designation', models.CharField(blank=True, max_length=100)),
