@@ -13,16 +13,24 @@ services:
       - "80:8000"
     volumes:
       - .:/code
-    environment:
-      MYSQL_DATABASE: '${DB_DATABASE}'
-      MYSQL_USER: '${DB_USERNAME}'
-      MYSQL_PASSWORD: '${DB_PASSWORD}'
     networks:
       - app-network
     depends_on:
-      - "db"
+      - "db_postgres"
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-  db:
+  db_postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: '${DB_NAME}'
+      POSTGRES_USER: '${DB_USER}'
+      POSTGRES_PASSWORD: '${DB_PASS}'
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+  db_mysql:
     image: mysql/mysql-server:8.0
     container_name: db
     restart: unless-stopped
@@ -30,15 +38,14 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${DB_PASS}'
       MYSQL_ROOT_HOST: "%"
-      MYSQL_DATABASE: '${DB_DATABASE}'
-      MYSQL_USER: '${DB_USERNAME}'
-      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_NAME}'
+      MYSQL_USER: '${DB_USER}'
+      MYSQL_PASSWORD: '${DB_PASS}'
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
     volumes:
-      - dbdata:/var/lib/mysql/
-      - ./container/mysql/my.cnf:/etc/mysql/my.cnf
+      - mysql_data:/var/lib/mysql/
     networks:
       - app-network
 
@@ -48,5 +55,7 @@ networks:
     driver: bridge
 #Volumes
 volumes:
-  dbdata:
+  mysql_data:
+    driver: local
+  postgres_data:
     driver: local

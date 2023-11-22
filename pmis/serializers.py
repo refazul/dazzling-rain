@@ -18,9 +18,9 @@ class AddressSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PersonSerializer(serializers.ModelSerializer):
-    child = ChildSerializer(many=True)
-    spouse = SpouseSerializer(many=True)
-    address = AddressSerializer(many=True)
+    child = ChildSerializer(many=True, read_only=True)
+    spouse = SpouseSerializer(many=True, read_only=True)
+    address = AddressSerializer(many=True, read_only=True)
 
     class Meta:
         model = Person

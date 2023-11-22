@@ -19,6 +19,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 CHROME_PATH = '/usr/bin/chromium'
 WKHTMLTOPDF_CMD = '/usr/bin/wkhtmltopdf'
+CORS_ALLOW_ALL_ORIGINS = True
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
@@ -44,6 +45,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'lib',
     'django_object_actions',
+    'corsheaders',
     'wkhtmltopdf',
     'polls.apps.PollsConfig',
     'reports.apps.ReportsConfig',
@@ -60,6 +62,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -96,15 +99,12 @@ WSGI_APPLICATION = 'projectname.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE'),
-        'USER': os.environ.get('MYSQL_USER'),
-        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
-        'HOST': 'db',
-        'PORT': 3306,
-        'OPTIONS': {
-            'init_command': 'SET default_storage_engine=INNODB'
-        }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT')
     }
 }
 

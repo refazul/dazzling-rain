@@ -9,3 +9,6 @@ bangla
 django-storages
 python-dotenv
 boto3
+djangorestframework
+django-cors-headers
+psycopg2
