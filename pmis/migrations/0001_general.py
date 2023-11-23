@@ -76,19 +76,18 @@ class Migration(migrations.Migration):
                 ('home_district', models.CharField(blank=True, max_length=100)),
                 ('organisation', models.CharField(blank=True, max_length=100)),
                 ('location', models.CharField(blank=True, max_length=100)),
-                ('gender', models.CharField(choices=[('M', 'Male'), ('F', 'Female')], max_length=1)),
                 ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='spouse', to='pmis.person')),
             ],
         ),
         migrations.CreateModel(
-            name='ServiceHistory',
+            name='Service',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('cadre', models.CharField(blank=True, max_length=100)),
                 ('govt_service_date', models.DateField(blank=True, null=True)),
                 ('gazetted_date', models.DateField(blank=True, null=True)),
                 ('encadrement_date', models.DateField(blank=True, null=True)),
-                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='service_history', to='pmis.person')),
+                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='service', to='pmis.person')),
             ],
         ),
         migrations.CreateModel(
@@ -104,7 +103,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='PromotionParticulars',
+            name='Promotion',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('rank', models.CharField(blank=True, max_length=100)),
@@ -112,7 +111,7 @@ class Migration(migrations.Migration):
                 ('pay_scale', models.CharField(blank=True, max_length=100)),
                 ('promotion_date', models.DateField(blank=True, null=True)),
                 ('g_o_date', models.DateField(blank=True, null=True)),
-                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='promotion_particulars', to='pmis.person')),
+                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='promotion', to='pmis.person')),
             ],
         ),
         migrations.CreateModel(
@@ -125,11 +124,11 @@ class Migration(migrations.Migration):
                 ('pay_scale', models.CharField(blank=True, max_length=100)),
                 ('from_date', models.DateField(blank=True, null=True)),
                 ('to_date', models.DateField(blank=True, null=True)),
-                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='posting_records', to='pmis.person')),
+                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='posting', to='pmis.person')),
             ],
         ),
         migrations.CreateModel(
-            name='PostingAbroad',
+            name='Abroad',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('post', models.CharField(blank=True, max_length=255)),
@@ -137,11 +136,11 @@ class Migration(migrations.Migration):
                 ('country', models.CharField(blank=True, max_length=100)),
                 ('from_date', models.DateField(blank=True, null=True)),
                 ('to_date', models.DateField(blank=True, null=True)),
-                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='posting_abroad', to='pmis.person')),
+                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='abroad', to='pmis.person')),
             ],
         ),
         migrations.CreateModel(
-            name='OtherServices',
+            name='Other',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name_of_employeer', models.CharField(blank=True, max_length=255)),
@@ -150,7 +149,7 @@ class Migration(migrations.Migration):
                 ('posting', models.CharField(blank=True, max_length=255)),
                 ('from_date', models.DateField(blank=True, null=True)),
                 ('to_date', models.DateField(blank=True, null=True)),
-                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='other_services', to='pmis.person')),
+                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='other', to='pmis.person')),
             ],
         ),
         migrations.CreateModel(
@@ -165,13 +164,13 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='HonourAward',
+            name='Honour',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title_of_award', models.CharField(blank=True, max_length=255)),
                 ('ground', models.CharField(blank=True, max_length=255)),
                 ('date', models.DateField(blank=True, null=True)),
-                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='honour_award', to='pmis.person')),
+                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='honour', to='pmis.person')),
             ],
         ),
         migrations.CreateModel(
@@ -185,18 +184,18 @@ class Migration(migrations.Migration):
                 ('result', models.CharField(blank=True, max_length=100)),
                 ('gpa_or_cgpa', models.CharField(blank=True, max_length=100)),
                 ('distinction', models.CharField(blank=True, max_length=100)),
-                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='educational_qualifications', to='pmis.person')),
+                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='education', to='pmis.person')),
             ],
         ),
         migrations.CreateModel(
-            name='DisciplinaryActions',
+            name='Prosecution',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('nature_of_offence', models.CharField(blank=True, max_length=100)),
                 ('punishment', models.CharField(blank=True, max_length=100)),
                 ('remarks', models.CharField(blank=True, max_length=100)),
                 ('date', models.DateField(blank=True, null=True)),
-                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='disciplinary_actions', to='pmis.person')),
+                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='prosecution', to='pmis.person')),
             ],
         ),
         migrations.CreateModel(
@@ -217,16 +216,16 @@ class Migration(migrations.Migration):
                 ('post_office', models.CharField(blank=True, max_length=100)),
                 ('police_station', models.CharField(blank=True, max_length=100)),
                 ('district', models.CharField(blank=True, max_length=100)),
-                ('telephone_no', models.CharField(blank=True, max_length=10)),
+                ('telephone_no', models.CharField(blank=True, max_length=100)),
                 ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='address', to='pmis.person')),
             ],
         ),
         migrations.CreateModel(
-            name='AdditionalProQualification',
+            name='Qualification',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('qualification', models.CharField(blank=True, max_length=255)),
-                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='additional_pro_qualification', to='pmis.person')),
+                ('person', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='qualification', to='pmis.person')),
             ],
         ),
     ]

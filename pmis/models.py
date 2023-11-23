@@ -58,10 +58,21 @@ class Spouse(models.Model):
     home_district   = models.CharField(max_length=100, blank=True)
     organisation    = models.CharField(max_length=100, blank=True)
     location        = models.CharField(max_length=100, blank=True)
-    gender          = models.CharField(max_length=1, choices=Person.GENDER_CHOICES)
 
     def __str__(self):
         return f"{self.spouse_name}"
+
+class Address(models.Model):
+    person                      = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='address', null=True, default=None)
+
+    village_or_house_or_road    = models.CharField(max_length=100, blank=True)
+    post_office                 = models.CharField(max_length=100, blank=True)
+    police_station              = models.CharField(max_length=100, blank=True)
+    district                    = models.CharField(max_length=100, blank=True)
+    telephone_no                = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return f"{self.village_or_house_or_road}"
 
 class Child(models.Model):
     person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='child', null=True, default=None)
@@ -72,18 +83,6 @@ class Child(models.Model):
 
     def __str__(self):
         return f"{self.child_name}"
-
-class Address(models.Model):
-    person                      = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='address', null=True, default=None)
-
-    village_or_house_or_road    = models.CharField(max_length=100, blank=True)
-    post_office                 = models.CharField(max_length=100, blank=True)
-    police_station              = models.CharField(max_length=100, blank=True)
-    district                    = models.CharField(max_length=100, blank=True)
-    telephone_no                = models.CharField(max_length=10, blank=True)
-
-    def __str__(self):
-        return f"{self.village_or_house_or_road}"
 
 class Language(models.Model):
     person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='language', null=True, default=None)
@@ -134,8 +133,8 @@ class Travel(models.Model):
 
     def __str__(self):
         return f"{self.country}"
-class PostingAbroad(models.Model):
-    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='posting_abroad', null=True, default=None)
+class Abroad(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='abroad', null=True, default=None)
 
     post            = models.CharField(max_length=255, blank=True)
     organisation    = models.CharField(max_length=100, blank=True)
@@ -147,8 +146,8 @@ class PostingAbroad(models.Model):
     def __str__(self):
         return f"{self.post}"
 
-class AdditionalProQualification(models.Model):
-    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='additional_pro_qualification', null=True, default=None)
+class Qualification(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='qualification', null=True, default=None)
 
     qualification   = models.CharField(max_length=255, blank=True)
     def __str__(self):
@@ -170,8 +169,8 @@ class Publication(models.Model):
 
 
 
-class HonourAward(models.Model):
-    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='honour_award', null=True, default=None)
+class Honour(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='honour', null=True, default=None)
 
     title_of_award  = models.CharField(max_length=255, blank=True)
     ground          = models.CharField(max_length=255, blank=True)
@@ -180,8 +179,8 @@ class HonourAward(models.Model):
     def __str__(self):
         return f"{self.title_of_award}"
 
-class OtherServices(models.Model):
-    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='other_services', null=True, default=None)
+class Other(models.Model):
+    person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='other', null=True, default=None)
 
     name_of_employeer   = models.CharField(max_length=255, blank=True)
     address             = models.CharField(max_length=255, blank=True)
@@ -195,8 +194,8 @@ class OtherServices(models.Model):
 
 
 
-class ServiceHistory(models.Model):
-    person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='service_history', null=True, default=None)
+class Service(models.Model):
+    person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='service', null=True, default=None)
 
     cadre = models.CharField(max_length=100, blank=True)
 
@@ -208,8 +207,8 @@ class ServiceHistory(models.Model):
     def __str__(self):
         return f"Cadre: {self.cadre}"
 
-class PromotionParticulars(models.Model):
-    person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='promotion_particulars', null=True, default=None)
+class Promotion(models.Model):
+    person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='promotion', null=True, default=None)
     rank                = models.CharField(max_length=100, blank=True)
     nature_of_promotion = models.CharField(max_length=100, blank=True)
     pay_scale           = models.CharField(max_length=100, blank=True)
@@ -221,8 +220,8 @@ class PromotionParticulars(models.Model):
         return f"Cadre: {self.rank}"
 
 
-class DisciplinaryActions(models.Model):
-    person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='disciplinary_actions', null=True, default=None)
+class Prosecution(models.Model):
+    person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='prosecution', null=True, default=None)
     nature_of_offence   = models.CharField(max_length=100, blank=True)
     punishment          = models.CharField(max_length=100, blank=True)
     remarks             = models.CharField(max_length=100, blank=True)
