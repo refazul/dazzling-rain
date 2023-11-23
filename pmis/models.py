@@ -72,7 +72,7 @@ class Address(models.Model):
     telephone_no                = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return f"{self.village_or_house_or_road}"
+        return f"{self.district}"
 
 class Child(models.Model):
     person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='child', null=True, default=None)
@@ -106,7 +106,7 @@ class Education(models.Model):
     distinction         = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        return f"{self.name_of_institution}"
+        return f"{self.degree}"
 
 class Training(models.Model):
     person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='training', null=True, default=None)

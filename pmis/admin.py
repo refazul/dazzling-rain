@@ -80,6 +80,7 @@ class ProsecutionInline(admin.TabularInline):  # You can also use admin.StackedI
 
 class PostingInline(admin.TabularInline):  # You can also use admin.StackedInline
     model = Posting
+    ordering = ("from_date", 'to_date',)
     extra = 1  # Number of empty forms to display
 
 
