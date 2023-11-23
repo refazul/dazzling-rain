@@ -89,7 +89,7 @@ class PostingSerializer(serializers.ModelSerializer):
 
 class PersonSerializer(serializers.ModelSerializer):
     spouse = SpouseSerializer(many=True, read_only=True)
-    Permanent = PermanentSerializer(many=True, read_only=True)
+    permanent = PermanentSerializer(many=True, read_only=True)
     present = PresentSerializer(many=True, read_only=True)
     child = ChildSerializer(many=True, read_only=True)
     language = LanguageSerializer(many=True, read_only=True)
