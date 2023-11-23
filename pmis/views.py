@@ -3,8 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 
 from rest_framework import viewsets, filters
-from .models import Person, Spouse, Address, Child, Language, Education, Training, Travel, Abroad, Qualification, Publication, Honour, Other, Service, Promotion, Prosecution, Posting
-from .serializers import PersonSerializer, SpouseSerializer, AddressSerializer, ChildSerializer, LanguageSerializer, EducationSerializer, TrainingSerializer, TravelSerializer, AbroadSerializer, QualificationSerializer, PublicationSerializer, HonourSerializer, OtherSerializer, ServiceSerializer, PromotionSerializer, ProsecutionSerializer, PostingSerializer
+from .models import Person, Spouse, Permanent, Present, Child, Language, Education, Training, Travel, Abroad, Qualification, Publication, Honour, Other, Service, Promotion, Prosecution, Posting
+from .serializers import PersonSerializer, SpouseSerializer, PermanentSerializer, PresentSerializer, ChildSerializer, LanguageSerializer, EducationSerializer, TrainingSerializer, TravelSerializer, AbroadSerializer, QualificationSerializer, PublicationSerializer, HonourSerializer, OtherSerializer, ServiceSerializer, PromotionSerializer, ProsecutionSerializer, PostingSerializer
 
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all()
@@ -16,9 +16,13 @@ class SpouseViewSet(viewsets.ModelViewSet):
     queryset = Spouse.objects.all()
     serializer_class = SpouseSerializer
 
-class AddressViewSet(viewsets.ModelViewSet):
-    queryset = Address.objects.all()
-    serializer_class = AddressSerializer
+class PermanentViewSet(viewsets.ModelViewSet):
+    queryset = Permanent.objects.all()
+    serializer_class = PermanentSerializer
+
+class PresentViewSet(viewsets.ModelViewSet):
+    queryset = Present.objects.all()
+    serializer_class = PresentSerializer
 
 class ChildViewSet(viewsets.ModelViewSet):
     queryset = Child.objects.all()

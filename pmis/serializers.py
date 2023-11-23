@@ -1,15 +1,20 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Person, Spouse, Address, Child, Language, Education, Training, Travel, Abroad, Qualification, Publication, Honour, Other, Service, Promotion, Prosecution, Posting
+from .models import Person, Spouse, Permanent, Present, Child, Language, Education, Training, Travel, Abroad, Qualification, Publication, Honour, Other, Service, Promotion, Prosecution, Posting
 
 class SpouseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Spouse
         fields = '__all__'
 
-class AddressSerializer(serializers.ModelSerializer):
+class PermanentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Address
+        model = Permanent
+        fields = '__all__'
+
+class PresentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Present
         fields = '__all__'
 
 class ChildSerializer(serializers.ModelSerializer):
@@ -84,7 +89,8 @@ class PostingSerializer(serializers.ModelSerializer):
 
 class PersonSerializer(serializers.ModelSerializer):
     spouse = SpouseSerializer(many=True, read_only=True)
-    address = AddressSerializer(many=True, read_only=True)
+    Permanent = PermanentSerializer(many=True, read_only=True)
+    present = PresentSerializer(many=True, read_only=True)
     child = ChildSerializer(many=True, read_only=True)
     language = LanguageSerializer(many=True, read_only=True)
     education = EducationSerializer(many=True, read_only=True)

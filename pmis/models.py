@@ -62,8 +62,20 @@ class Spouse(models.Model):
     def __str__(self):
         return f"{self.spouse_name}"
 
-class Address(models.Model):
-    person                      = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='address', null=True, default=None)
+class Permanent(models.Model):
+    person                      = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='permanent', null=True, default=None)
+
+    village_or_house_or_road    = models.CharField(max_length=100, blank=True)
+    post_office                 = models.CharField(max_length=100, blank=True)
+    police_station              = models.CharField(max_length=100, blank=True)
+    district                    = models.CharField(max_length=100, blank=True)
+    telephone_no                = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return f"{self.district}"
+
+class Present(models.Model):
+    person                      = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='present', null=True, default=None)
 
     village_or_house_or_road    = models.CharField(max_length=100, blank=True)
     post_office                 = models.CharField(max_length=100, blank=True)

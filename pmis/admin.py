@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Person, Spouse, Child, Address, Language, Education, Training, Travel, Abroad, Qualification, \
+from .models import Person, Spouse, Child, Permanent, Present, Language, Education, Training, Travel, Abroad, Qualification, \
     Publication, Honour, Other, Service, Promotion, Prosecution, Posting
 
 
@@ -8,8 +8,12 @@ class SpouseInline(admin.TabularInline):  # You can also use admin.StackedInline
     extra = 1  # Number of empty forms to display
 
 
-class AddressInline(admin.TabularInline):  # You can also use admin.StackedInline
-    model = Address
+class PermanentInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = Permanent
+    extra = 1  # Number of empty forms to display
+
+class PresentInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = Present
     extra = 1  # Number of empty forms to display
 
 
@@ -116,7 +120,7 @@ class PersonAdmin(admin.ModelAdmin):
             'email',
         ]}),
     ]
-    inlines = [SpouseInline, ChildInline, AddressInline, LanguageInline, EducationInline, TrainingInline, TravelInline,
+    inlines = [SpouseInline, ChildInline, PermanentInline, PresentInline, LanguageInline, EducationInline, TrainingInline, TravelInline,
                AbroadInline, QualificationInline, PublicationInline, HonourInline, OtherInline, ServiceInline, PromotionInline,
                ProsecutionInline, PostingInline]
 

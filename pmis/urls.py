@@ -1,11 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import PersonViewSet, SpouseViewSet, AddressViewSet, ChildViewSet, LanguageViewSet, EducationViewSet, TrainingViewSet, TravelViewSet, AbroadViewSet, QualificationViewSet, PublicationViewSet, HonourViewSet, OtherViewSet, ServiceViewSet, PromotionViewSet, ProsecutionViewSet, PostingViewSet
+from .views import PersonViewSet, SpouseViewSet, PermanentViewSet, PresentViewSet, ChildViewSet, LanguageViewSet, EducationViewSet, TrainingViewSet, TravelViewSet, AbroadViewSet, QualificationViewSet, PublicationViewSet, HonourViewSet, OtherViewSet, ServiceViewSet, PromotionViewSet, ProsecutionViewSet, PostingViewSet
 
 router = DefaultRouter()
 router.register(r'person', PersonViewSet)
 router.register(r'spouse', SpouseViewSet)
-router.register(r'address', AddressViewSet)
+router.register(r'permanent', PermanentViewSet)
+router.register(r'present', PresentViewSet)
 router.register(r'child', ChildViewSet)
 router.register(r'language', LanguageViewSet)
 router.register(r'education', EducationViewSet)
