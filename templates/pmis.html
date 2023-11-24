@@ -1,3 +1,4 @@
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -210,7 +211,7 @@
                                                 <tr>
                                                     <td class="td2"><div align="right">GENDER</div></td>
                                                     <td><em><strong>:</strong></em></td>
-                                                    <td>{{ gender }}</td>
+                                                    <td>{{ gender | male_female }}</td>
 
                                                     <td class="td2"><div align="right">RELIGION</div></td>
                                                     <td><em><strong>:</strong></em></td>
@@ -229,7 +230,7 @@
 
                                                     <td class="td2"><div align="right">FREEDOM FIGHTER</div></td>
                                                     <td><em><strong>:</strong></em></td>
-                                                    <td>{{ freedom_fighter }}</td>
+                                                    <td>{{ freedom_fighter | yes_no }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td2"><div align="right">MOBILE</div></td>
@@ -364,7 +365,7 @@
                                                     <tr>
                                                         <td>{{ p.child_name }}</td>
                                                         <td>{{ p.date_of_birth | date:'d/m/y' }}</td>
-                                                        <td>{{ p.gender }}</td>
+                                                        <td>{{ p.gender | male_female }}</td>
                                                     </tr>
                                                 {% endfor %}
                                                 </tbody>
@@ -388,9 +389,9 @@
                                                 {% for p in language %}
                                                     <tr>
                                                         <td>{{ p.language_name }}</td>
-                                                        <td>{{ p.read }}</td>
-                                                        <td>{{ p.write }}</td>
-                                                        <td>{{ p.speak }}</td>
+                                                        <td>{{ p.read | dash_no }}</td>
+                                                        <td>{{ p.write | dash_no }}</td>
+                                                        <td>{{ p.speak | dash_no }}</td>
                                                     </tr>
                                                 {% endfor %}
                                                 </tbody>
@@ -451,7 +452,7 @@
                                                         <td>{{ p.position }}</td>
                                                         <td>{{ p.from_date | date:'d/m/y' }}</td>
                                                         <td>{{ p.to_date | date:'d/m/y' }}</td>
-                                                        <td>{{ 'Duration' }}</td>
+                                                        <td>{{ p.to_date|date_diff:p.from_date }}</td>
                                                     </tr>
                                                 {% endfor %}
                                                 </tbody>
@@ -481,7 +482,7 @@
                                                         <td>{{ p.position }}</td>
                                                         <td>{{ p.from_date | date:'d/m/y' }}</td>
                                                         <td>{{ p.to_date | date:'d/m/y' }}</td>
-                                                        <td>{{ 'Duration' }}</td>
+                                                        <td>{{ p.to_date|date_diff:p.from_date }}</td>
                                                     </tr>
                                                 {% endfor %}
                                                 </tbody>
@@ -508,7 +509,7 @@
                                                         <td>{{ p.country }}</td>
                                                         <td>{{ p.from_date | date:'d/m/y' }}</td>
                                                         <td>{{ p.to_date | date:'d/m/y' }}</td>
-                                                        <td>{{ 'Duration' }}</td>
+                                                        <td>{{ p.to_date|date_diff:p.from_date }}</td>
                                                     </tr>
                                                 {% endfor %}
                                                 </tbody>
@@ -537,7 +538,7 @@
                                                         <td>{{ p.purpose }}</td>
                                                         <td>{{ p.from_date | date:'d/m/y' }}</td>
                                                         <td>{{ p.to_date | date:'d/m/y' }}</td>
-                                                        <td>{{ 'Duration' }}</td>
+                                                        <td>{{ p.to_date|date_diff:p.from_date }}</td>
                                                     </tr>
                                                 {% endfor %}
                                                 </tbody>
