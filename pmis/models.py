@@ -217,7 +217,7 @@ class Service(models.Model):
 
 
     def __str__(self):
-        return f"Cadre: {self.cadre}"
+        return f"{self.cadre}"
 
 class Promotion(models.Model):
     person              = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='promotion', null=True, default=None)
@@ -229,7 +229,7 @@ class Promotion(models.Model):
     g_o_date            = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f"Cadre: {self.rank}"
+        return f"{self.rank}"
 
 
 class Prosecution(models.Model):
@@ -241,7 +241,7 @@ class Prosecution(models.Model):
     date                = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f"Cadre: {self.nature_of_offence}"
+        return f"{self.nature_of_offence}"
 
 class Posting(models.Model):
     person          = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='posting', null=True, default=None)
@@ -254,4 +254,4 @@ class Posting(models.Model):
     to_date         = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f"Cadre: {self.designation}"
+        return f"{self.designation}"
