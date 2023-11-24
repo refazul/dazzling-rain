@@ -5,6 +5,8 @@ from django.shortcuts import render
 from rest_framework import viewsets, filters
 from .models import Person, Spouse, Permanent, Present, Child, Language, Education, Training, Travel, Abroad, Qualification, Publication, Honour, Other, Service, Promotion, Prosecution, Posting
 from .serializers import PersonSerializer, SpouseSerializer, PermanentSerializer, PresentSerializer, ChildSerializer, LanguageSerializer, EducationSerializer, TrainingSerializer, TravelSerializer, AbroadSerializer, QualificationSerializer, PublicationSerializer, HonourSerializer, OtherSerializer, ServiceSerializer, PromotionSerializer, ProsecutionSerializer, PostingSerializer
+from wkhtmltopdf.views import PDFTemplateView
+from django.views.generic import TemplateView
 
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all()
@@ -79,3 +81,29 @@ class ProsecutionViewSet(viewsets.ModelViewSet):
 class PostingViewSet(viewsets.ModelViewSet):
     queryset = Posting.objects.all()
     serializer_class = PostingSerializer
+
+
+class PmisPDF(PDFTemplateView):
+    # filename = 'pdf.pdf'
+    template_name = 'pmis.html'
+    show_content_in_browser = True
+    model = Person
+    cmd_options = {
+        'margin-top': 3
+    }
+
+    def get_filename(self, **kwargs):
+        return self.kwargs['pmis_id'] + '.pdf'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pmis_id = self.kwargs['pmis_id']
+        pmis_person = Person.objects.get(pk=pmis_id)
+        person_name = getattr(pmis_person, 'person_name')
+        name_bangla = getattr(pmis_person, 'name_bangla')
+
+        context['id'] = pmis_id
+        context['person_name'] = person_name
+        context['name_bangla'] = name_bangla
+
+        return context

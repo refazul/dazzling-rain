@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Person, Spouse, Child, Permanent, Present, Language, Education, Training, Travel, Abroad, Qualification, \
     Publication, Honour, Other, Service, Promotion, Prosecution, Posting
-
+from django_object_actions import DjangoObjectActions
 
 class SpouseInline(admin.TabularInline):  # You can also use admin.StackedInline
     model = Spouse
@@ -87,8 +87,16 @@ class PostingInline(admin.TabularInline):  # You can also use admin.StackedInlin
     ordering = ("from_date", 'to_date',)
     extra = 1  # Number of empty forms to display
 
+class PersonAdmin(DjangoObjectActions, admin.ModelAdmin):
+    def pdf_this(self, request, obj):
+        from django.http import HttpResponseRedirect
+        return HttpResponseRedirect(f'/pmis/{obj.id}')
 
-class PersonAdmin(admin.ModelAdmin):
+    pdf_this.label = "Download PDF"  # optional
+    pdf_this.short_description = "Download the PDF"  # optional
+
+    change_actions = ('pdf_this',)
+
     list_display = ('person_name', 'nid', 'govt_id')  # Customize the columns displayed
     search_fields = ('person_name', 'nid', 'govt_id')  # Add search functionality
     list_filter = ('rank', 'batch', 'home_district')  # Add filter options
@@ -123,6 +131,5 @@ class PersonAdmin(admin.ModelAdmin):
     inlines = [SpouseInline, ChildInline, PermanentInline, PresentInline, LanguageInline, EducationInline, TrainingInline, TravelInline,
                AbroadInline, QualificationInline, PublicationInline, HonourInline, OtherInline, ServiceInline, PromotionInline,
                ProsecutionInline, PostingInline]
-
 
 admin.site.register(Person, PersonAdmin)

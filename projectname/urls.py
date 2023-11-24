@@ -19,10 +19,12 @@ from pages.views import home_view
 from django.conf import settings
 from django.conf.urls.static import static
 from reports.views import MyPDF
+from pmis.views import PmisPDF
 
 urlpatterns = [
     path('', home_view, name='home'),
     path('admin/', admin.site.urls),
     path('api/',include('pmis.urls')),
     path('pdf/<str:police_id>', MyPDF.as_view(), name='pdf'),
+    path('pmis/<str:pmis_id>', PmisPDF.as_view(), name='pdf'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
