@@ -3,8 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 
 from rest_framework import viewsets, filters
-from .models import Person, Spouse, Permanent, Present, Child, Language, Education, Training, Travel, Abroad, Qualification, Publication, Honour, Other, Service, Promotion, Prosecution, Posting
-from .serializers import PersonSerializer, SpouseSerializer, PermanentSerializer, PresentSerializer, ChildSerializer, LanguageSerializer, EducationSerializer, TrainingSerializer, TravelSerializer, AbroadSerializer, QualificationSerializer, PublicationSerializer, HonourSerializer, OtherSerializer, ServiceSerializer, PromotionSerializer, ProsecutionSerializer, PostingSerializer
+from .models import Person, Spouse, Permanent, Present, Child, Language, Education, Training, Travel, Abroad, Qualification, Publication, Honour, Other, Service, Promotion, Prosecution, Posting, Recent
+from .serializers import PersonSerializer, SpouseSerializer, PermanentSerializer, PresentSerializer, ChildSerializer, LanguageSerializer, EducationSerializer, TrainingSerializer, TravelSerializer, AbroadSerializer, QualificationSerializer, PublicationSerializer, HonourSerializer, OtherSerializer, ServiceSerializer, PromotionSerializer, ProsecutionSerializer, PostingSerializer, RecentSerializer
 from wkhtmltopdf.views import PDFTemplateView
 from django.views.generic import TemplateView
 
@@ -82,6 +82,10 @@ class PostingViewSet(viewsets.ModelViewSet):
     queryset = Posting.objects.all()
     serializer_class = PostingSerializer
 
+class RecentViewSet(viewsets.ModelViewSet):
+    queryset = Recent.objects.all()
+    serializer_class = RecentSerializer
+
 
 class PmisPDF(PDFTemplateView):
     # filename = 'pdf.pdf'
@@ -145,6 +149,7 @@ class PmisPDF(PDFTemplateView):
         context['promotion'] = pmis_person.promotion.all().order_by('promotion_date')
         context['prosecutioin'] = pmis_person.prosecution.all().order_by('date')
         context['posting'] = pmis_person.posting.all().order_by('from_date')
+        context['recent'] = pmis_person.recent.all().order_by('order_date')
 
 
         return context

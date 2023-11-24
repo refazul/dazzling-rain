@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Person, Spouse, Child, Permanent, Present, Language, Education, Training, Travel, Abroad, Qualification, \
-    Publication, Honour, Other, Service, Promotion, Prosecution, Posting
+    Publication, Honour, Other, Service, Promotion, Prosecution, Posting, Recent
 from django_object_actions import DjangoObjectActions
 
 class SpouseInline(admin.TabularInline):  # You can also use admin.StackedInline
@@ -87,6 +87,11 @@ class PostingInline(admin.TabularInline):  # You can also use admin.StackedInlin
     ordering = ("from_date", 'to_date',)
     extra = 1  # Number of empty forms to display
 
+class RecentInline(admin.TabularInline):  # You can also use admin.StackedInline
+    model = Recent
+    ordering = ("order_date",)
+    extra = 1  # Number of empty forms to display
+
 class PersonAdmin(DjangoObjectActions, admin.ModelAdmin):
     def pdf_this(self, request, obj):
         from django.http import HttpResponseRedirect
@@ -130,6 +135,6 @@ class PersonAdmin(DjangoObjectActions, admin.ModelAdmin):
     ]
     inlines = [SpouseInline, ChildInline, PermanentInline, PresentInline, LanguageInline, EducationInline, TrainingInline, TravelInline,
                AbroadInline, QualificationInline, PublicationInline, HonourInline, OtherInline, ServiceInline, PromotionInline,
-               ProsecutionInline, PostingInline]
+               ProsecutionInline, PostingInline, RecentInline]
 
 admin.site.register(Person, PersonAdmin)

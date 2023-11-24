@@ -794,48 +794,33 @@
                                             </table>
                                         </td>
                                     </tr>
-                                    <!--
+
                                     <tr>
                                             <td>
                                                 <table width="100%" align="center" border="0">
-                                                    <tbody><tr>
+                                                    <tbody>
+                                                    <tr>
                                                         <td colspan="3" width="70%" class="td3"></td>
                                                         <td width="15%" class="td3">ORDER DATE</td>
                                                         <td width="12%" class="td3">JOIN DATE</td>
                                                         <td width="10%" class="td3">RELEASE DATE</td>
                                                         <td width="10%" class="td3">PAY SCALE</td>
                                                     </tr>
-
-                                                                            <tr>
-                                                                <td>SECRETARY</td>
-                                                                <td>TECHNICAL &amp; MADRASAH EDUCATION DIV</td>
-                                                                <td>DHAKA</td>
-                                                                <td align="center">09/02/22</td>								<td>
-                                                                            <table style="background-color: white; border-collapse:collapse; empty-cells: show;" border="1" cellpadding="2" cellspacing="0" width="100">
-                                                                                <tbody><tr><td width="100" height="18"><font face="SutonnyMJ" size="2"><div align="CENTER"></div></font> </td>
-                                                                            </tr></tbody></table>
-                                                                        </td>								<td>
-                                                                            <table style="background-color: white; border-collapse:collapse; empty-cells: show;" border="1" cellpadding="2" cellspacing="0" width="100">
-                                                                                <tbody><tr><td width="100" height="18"><font face="SutonnyMJ" size="2"><div align="CENTER"></div></font> </td>
-                                                                            </tr></tbody></table>
-                                                                        </td>								<td>78000/- (FIXED)</td>
-                                                            </tr>
-                                                                                        <tr>
-                                                                <td>SENIOR SECRETARY</td>
-                                                                <td>TECHNICAL &amp; MADRASAH EDUCATION DIV</td>
-                                                                <td>DHAKA</td>
-                                                                <td align="center">01/11/22</td>								<td align="center">02/11/22</td>								<td>
-                                                                            <table style="background-color: white; border-collapse:collapse; empty-cells: show;" border="1" cellpadding="2" cellspacing="0" width="100">
-                                                                                <tbody><tr><td width="100" height="18"><font face="SutonnyMJ" size="2"><div align="CENTER"></div></font> </td>
-                                                                            </tr></tbody></table>
-                                                                        </td>								<td>82000/- (FIXED)</td>
-                                                            </tr>
-
-
-                                                </tbody></table>
+                                                    {% for p in recent %}
+                                                        <tr>
+                                                            <td>{{ p.designation }}</td>
+                                                            <td>{{ p.organisation }}</td>
+                                                            <td>{{ p.location }}</td>
+                                                            <td>{{ p.order_date | date:"d/m/y" }}</td>
+                                                            <td>{{ p.join_date | date:"d/m/y" }}</td>
+                                                            <td>{{ p.release_date | date:"d/m/y" }}</td>
+                                                            <td>{{ p.pay_scale }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
                                             </td>
                                     </tr>
-                                    -->
 
                                 </tbody>
                                 </table>
