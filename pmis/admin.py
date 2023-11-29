@@ -115,23 +115,7 @@ class PersonAdmin(DjangoObjectActions, admin.ModelAdmin):
 
         return response
 
-    export_as_csv.short_description = "Export Selected"
-
-    def changelist_view(self, request, extra_context=None):
-        """
-        Overridden to pass the filtered queryset to the custom action.
-        """
-        # Get the changelist
-        cl = self.get_changelist_instance(request)
-
-        # Pass the filtered queryset to the action
-        if 'action' in request.POST and request.POST['action'] == 'export_as_csv':
-            return self.export_as_csv(request, cl.get_queryset(request))
-
-        # Proceed as normal for other cases
-        return super().changelist_view(request, extra_context)
-
-
+    export_as_csv.short_description = "Export as CSV"
 
     def pdf_this(self, request, obj):
         from django.http import HttpResponseRedirect
