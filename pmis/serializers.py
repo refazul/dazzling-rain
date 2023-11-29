@@ -71,7 +71,7 @@ class QualificationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PublicationSerializer(serializers.ModelSerializer):
-    date = CustomDateField(required=False, input_formats=["%d/%m/%y"])
+    date = CustomDateField(required=False, input_formats=["%Y-%m-%d"])
 
     class Meta:
         model = Publication
