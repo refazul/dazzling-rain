@@ -2,6 +2,9 @@ from django.contrib import admin
 from .models import Person, Spouse, Child, Permanent, Present, Language, Education, Training, Travel, Abroad, Qualification, \
     Publication, Honour, Other, Service, Promotion, Prosecution, Posting, Recent
 from django_object_actions import DjangoObjectActions
+from django.http import HttpResponse
+from django.urls import path
+import csv
 
 class SpouseInline(admin.TabularInline):  # You can also use admin.StackedInline
     model = Spouse
@@ -93,6 +96,43 @@ class RecentInline(admin.TabularInline):  # You can also use admin.StackedInline
     extra = 1  # Number of empty forms to display
 
 class PersonAdmin(DjangoObjectActions, admin.ModelAdmin):
+    # Export As CSV
+    actions = ["export_as_csv"]
+    def export_as_csv(self, request, queryset):
+        """
+        Export the current queryset as CSV.
+        """
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
+    export_as_csv.short_description = "Export Selected"
+
+    def changelist_view(self, request, extra_context=None):
+        """
+        Overridden to pass the filtered queryset to the custom action.
+        """
+        # Get the changelist
+        cl = self.get_changelist_instance(request)
+
+        # Pass the filtered queryset to the action
+        if 'action' in request.POST and request.POST['action'] == 'export_as_csv':
+            return self.export_as_csv(request, cl.get_queryset(request))
+
+        # Proceed as normal for other cases
+        return super().changelist_view(request, extra_context)
+
+
+
     def pdf_this(self, request, obj):
         from django.http import HttpResponseRedirect
         return HttpResponseRedirect(f'/pmis/{obj.id}')
