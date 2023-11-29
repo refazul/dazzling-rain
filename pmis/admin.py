@@ -142,9 +142,9 @@ class PersonAdmin(DjangoObjectActions, admin.ModelAdmin):
 
     change_actions = ('pdf_this',)
 
-    list_display = ('person_name', 'nid', 'govt_id')  # Customize the columns displayed
+    list_display = ('person_name', 'name_bangla', 'nid', 'govt_id')  # Customize the columns displayed
     search_fields = ('person_name', 'nid', 'govt_id')  # Add search functionality
-    list_filter = ('rank', 'batch', 'home_district')  # Add filter options
+    list_filter = ('rank', 'batch', 'home_district', 'designation', 'organisation')  # Add filter options
     fieldsets = [
         ('Basic', {'fields': [
             'govt_id',

@@ -7,6 +7,20 @@ from .models import Person, Spouse, Permanent, Present, Child, Language, Educati
 from .serializers import PersonSerializer, SpouseSerializer, PermanentSerializer, PresentSerializer, ChildSerializer, LanguageSerializer, EducationSerializer, TrainingSerializer, TravelSerializer, AbroadSerializer, QualificationSerializer, PublicationSerializer, HonourSerializer, OtherSerializer, ServiceSerializer, PromotionSerializer, ProsecutionSerializer, PostingSerializer, RecentSerializer
 from wkhtmltopdf.views import PDFTemplateView
 from django.views.generic import TemplateView
+import re
+
+def to_url_friendly_filename(s):
+    # Replace spaces with underscores
+    s = s.replace(' ', '_')
+
+    # Remove or replace special characters
+    s = re.sub(r'[^\w\s\-]', '', s)
+
+    # Convert to lowercase
+    s = s.lower()
+
+    return s
+
 
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all()
@@ -90,14 +104,19 @@ class RecentViewSet(viewsets.ModelViewSet):
 class PmisPDF(PDFTemplateView):
     # filename = 'pdf.pdf'
     template_name = 'pmis.html'
-    show_content_in_browser = True
+    #show_content_in_browser = True
     model = Person
     cmd_options = {
         'margin-top': 3
     }
 
     def get_filename(self, **kwargs):
-        return self.kwargs['pmis_id'] + '.pdf'
+        context = super().get_context_data(**kwargs)
+        pmis_id = self.kwargs['pmis_id']
+        pmis_person = Person.objects.get(pk=pmis_id)
+        person_name = getattr(pmis_person, 'person_name')
+        filename = to_url_friendly_filename(person_name)
+        return filename + '.pdf'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
